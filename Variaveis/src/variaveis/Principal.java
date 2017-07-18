@@ -11,6 +11,13 @@ public class Principal {
         pessoa.ser = "Humano";
         System.out.println(pessoa.ser);
         System.out.println(Pessoa.ser);
+        
+        int j = 0;
+        for (int i = 0; i < 10; i++) {
+            j = j + (1 * i);
+            System.out.println("J = " + j);
+        }
+        
     }
     
 }
