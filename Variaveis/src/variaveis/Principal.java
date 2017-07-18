@@ -18,6 +18,11 @@ public class Principal {
             System.out.println("J = " + j);
         }
         
+        int i = 2;
+        while (i < 20) {
+            System.out.println("i = " + i);
+            i = i + 2;
+        }       
     }
     
 }
