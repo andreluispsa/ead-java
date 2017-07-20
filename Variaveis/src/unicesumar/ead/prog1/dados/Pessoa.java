@@ -1,4 +1,4 @@
-package variaveis;
+package unicesumar.ead.prog1.dados;
 
 public class Pessoa {
     
