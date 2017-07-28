@@ -1,19 +1,23 @@
-package unicesumar.ead.prog1.dados;
+package unicesumar.ead.prog1.principal;
 
 import java.util.Date;
+import unicesumar.ead.prog1.dados.Pessoa;
 
 public class Principal {
 
     public static void main(String[] args) {
         
-        Pessoa pessoa = new Pessoa();
-        pessoa.nome = "Maria";
-        System.out.println("Nome: " + pessoa.nome);
-        System.out.println(Pessoa.ser);
-        pessoa.ser = "Humano";
-        System.out.println(pessoa.ser);
-        System.out.println(Pessoa.ser);
-
+        Pessoa pes = new Pessoa();
+        Pessoa pes2 = new Pessoa("João", "(11) 932323233", 13);
+        System.out.println(pes.mostrarDados());
+        System.out.println(pes2.mostrarDados());
+        System.out.println("#####################");
+        pes.nome = "Maria";
+        pes2.idade = 15;
+        System.out.println(pes.mostrarDados());
+        System.out.println(pes2.mostrarDados());
+        System.out.println("#####################");
+        
         //exemplo do uso do FOR
         int j = 0;
         for (int i = 0; i < 10; i++) {

@@ -2,20 +2,26 @@ package unicesumar.ead.prog1.dados;
 
 public class Pessoa {
     
-    String nome;
-    int idade;
-    static String ser = "Ser Humano";
+    public String nome;
+    public String telefone;
+    public int idade;
     
-    public void andar() {
-        int distancia;
-        distancia = 10;
-        nome = "Maria";
-    
+    public Pessoa() {
+        nome = "André Sá";
+        telefone = "(21) 979773888";
+        idade = 40;
     }
     
-    public void falar() {
-        int distancia;
-        distancia = 10;
-        idade = 30;
+    public Pessoa(String nom, String tel, int id) {
+        nome = nom;
+        telefone = tel;
+        idade = id;
     }
+
+    public String mostrarDados() {
+        String retorno = "Nome: " + nome + " / Idade: " + idade + " / Telefone: " + telefone;
+        return retorno;
+    }
+    
+
 }
