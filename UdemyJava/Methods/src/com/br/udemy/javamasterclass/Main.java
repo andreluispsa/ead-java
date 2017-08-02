@@ -8,9 +8,25 @@ public class Main {
 
         calculateAndPrintScore(true, 10000, 8, 200);
 
-        System.out.println("Your final score is: " + calculateScore(true, 1500, 5, 100));
+        int highScore = calculateScore(true, 1500, 5, 100);
 
-        System.out.println("Your final score is: " + calculateScore(false, 1500, 5, 100));
+        System.out.println("Your final score is: " + highScore);
+
+        highScore = calculateScore(false, 1500, 5, 100);
+
+        System.out.println("Your final score is: " + highScore);
+
+        int highScorePosition = calculateHighScorePosition(1500);
+        displayHighScorePosition("Andre", highScorePosition);
+
+        highScorePosition = calculateHighScorePosition(900);
+        displayHighScorePosition("Ellen", highScorePosition);
+
+        highScorePosition = calculateHighScorePosition(400);
+        displayHighScorePosition("Luiza", highScorePosition);
+
+        highScorePosition = calculateHighScorePosition(50);
+        displayHighScorePosition("Alice", highScorePosition);
 
     }
 
@@ -29,5 +45,21 @@ public class Main {
             return finalScore;
         }
         return -1;
+    }
+
+    public static void displayHighScorePosition(String name, int position) {
+        System.out.println(name + " managed to get into position " + position + " on the high score table");
+    }
+
+    public static int calculateHighScorePosition(int score) {
+        if (score >= 1000) {
+            return 1;
+        } else if (score >= 500 && score < 1000) {
+            return 2;
+        } else if (score >= 100 && score < 500) {
+            return 3;
+        } else {
+            return 4;
+        }
     }
 }
