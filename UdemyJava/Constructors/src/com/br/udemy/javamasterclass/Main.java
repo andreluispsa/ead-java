@@ -4,13 +4,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Account account = new Account();
+        Account account = new Account(132443, 2500.00, "André Sá", "andrepena.sa@gmail.com", "21-9797-73888");
 
-        account.setCustomerName("André Sá");
-        account.setCustomerEmail("andrepena.sa@gmail.com");
-        account.setCustomerPhone("21-97977-3888");
-        account.setBalance(2500.00);
-        account.setNumber(132443);
+//        account.setCustomerName("André Sá");
+//        account.setCustomerEmail("andrepena.sa@gmail.com");
+//        account.setCustomerPhone("21-97977-3888");
+//        account.setBalance(2500.00);
+//        account.setNumber(132443);
 
         System.out.println("Name: " + account.getCustomerName());
         System.out.println("Email: " + account.getCustomerEmail());
@@ -23,6 +23,23 @@ public class Main {
         account.withdraw(20.00);
         account.withdraw(3000.00);
 
-        System.out.println("New Account Balance: " + account.getBalance());
+        System.out.println("Account New Balance: " + account.getBalance());
+
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+        Account newAccount = new Account();
+        System.out.println("Name: " + newAccount.getCustomerName());
+        System.out.println("Email: " + newAccount.getCustomerEmail());
+        System.out.println("Phone: " + newAccount.getCustomerPhone());
+        System.out.println("Account Number: " + newAccount.getNumber());
+        System.out.println("Account Balance: " + newAccount.getBalance());
+
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+        Account newAccount2 = new Account("Ellen Moraes", "ellen@gmail.com", "21-97977-3888");
+        System.out.println("Name: " + newAccount2.getCustomerName());
+        System.out.println("Email: " + newAccount2.getCustomerEmail());
+        System.out.println("Phone: " + newAccount2.getCustomerPhone());
+        System.out.println("Account Number: " + newAccount2.getNumber());
+        System.out.println("Account Balance: " + newAccount2.getBalance());
+
     }
 }
