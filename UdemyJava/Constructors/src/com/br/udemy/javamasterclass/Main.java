@@ -41,5 +41,23 @@ public class Main {
         System.out.println("Account Number: " + newAccount2.getNumber());
         System.out.println("Account Balance: " + newAccount2.getBalance());
 
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+        VipCustomer customer1 = new VipCustomer();
+        System.out.println("Vip Customer 1 Name: " + customer1.getName());
+        System.out.println("Vip Customer 1 Email: " + customer1.getEmail());
+        System.out.println("Vip Customer 1 Credit Limit: " + customer1.getCreditLimit());
+
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+        VipCustomer customer2 = new VipCustomer("André Sá", 1500.00);
+        System.out.println("Vip Customer 2 Name: " + customer2.getName());
+        System.out.println("Vip Customer 2 Email: " + customer2.getEmail());
+        System.out.println("Vip Customer 2 Credit Limit: " + customer2.getCreditLimit());
+
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+        VipCustomer customer3 = new VipCustomer("Ellen Moraes", 1750.00, "ellen@email.com");
+        System.out.println("Vip Customer 1 Name: " + customer3.getName());
+        System.out.println("Vip Customer 1 Email: " + customer3.getEmail());
+        System.out.println("Vip Customer 1 Credit Limit: " + customer3.getCreditLimit());
+
     }
 }
