@@ -3,13 +3,13 @@ package com.br.udemy.javamasterclass;
 public class Vehicle {
 
     private String name;
-    private int size;
+    private String size;
 
 
     private int currentVelocity;
     private int currentDirection;
 
-    public Vehicle(String name, int size) {
+    public Vehicle(String name, String size) {
         this.name = name;
         this.size = size;
         this.currentVelocity = 0;
@@ -22,8 +22,8 @@ public class Vehicle {
     }
 
     public void move (int velocity, int direction) {
-        this.currentDirection += direction;
-        this.currentVelocity += velocity;
+        this.currentDirection = direction;
+        this.currentVelocity = velocity;
         System.out.println("Vehicle.move(): Moving at " + currentVelocity + " in direction " + currentDirection);
     }
 
@@ -31,7 +31,7 @@ public class Vehicle {
         return name;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
@@ -41,5 +41,9 @@ public class Vehicle {
 
     public int getCurrentDirection() {
         return currentDirection;
+    }
+
+    public void stop() {
+        this.currentVelocity = 0;
     }
 }

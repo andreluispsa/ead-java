@@ -8,7 +8,7 @@ public class Car extends Vehicle {
     private boolean isManual;
     private int currentGear;
 
-    public Car(String name, int size, int wheels, int doors, int gears, boolean isManual) {
+    public Car(String name, String size, int wheels, int doors, int gears, boolean isManual) {
         super(name, size);
         this.wheels = wheels;
         this.doors = doors;
@@ -17,7 +17,14 @@ public class Car extends Vehicle {
         this.currentGear = 1;
     }
 
-// paused at 10:00 class 43
+    public void changeGear(int currentGear) {
+        this.currentGear = currentGear;
+        System.out.println("Car.setCurrentGear(): Changed to " + this.currentGear + " gear.");
+    }
 
+    public void changeVelocity(int speed, int direction) {
+        System.out.println("Car.changeVelocity(): Velocity " + speed + " direction " + direction);
+        move(speed, direction);
+    }
 
 }
