@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 /**
  *
- * @author andreluisp
+ * @author André Sá - RA: 1504190-5
  */
 
 @Entity
@@ -77,5 +77,14 @@ public class Pokemon implements Serializable {
     }
  
     public Pokemon() {}
+    
+    @Override
+    public String toString() {
+        return (this.getId() + ": " + 
+                     "Nome: " + this.getNome() + " - " + 
+                     "Tipo: " + this.getTipo() + " - " + 
+                     "Força: " + this.getForca() + " - " + 
+                     "Data da Captura: " + this.getDataCaptura() + "\n");
+    }
     
 }

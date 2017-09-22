@@ -7,7 +7,7 @@ package pokemon;
 
 /**
  *
- * @author andreluisp
+ * @author André Sá - RA: 1504190-5
  */
 public class Mapa {
 

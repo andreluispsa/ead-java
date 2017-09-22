@@ -1,5 +1,12 @@
 package pokemon;
 
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,15 +15,25 @@ package pokemon;
 
 /**
  *
- * @author andreluisp
+ * @author André Sá - RA: 1504190-5
  */
 public class Cadastro extends javax.swing.JFrame {
-
+    private EntityManagerFactory factory;
+    private EntityManager manager;
+    
     /**
      * Creates new form Cadastro
      */
     public Cadastro() {
         initComponents();
+        try {
+            factory = Persistence.createEntityManagerFactory("PokemonPU");
+            manager = factory.createEntityManager();
+            listarPokemons();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     /**
@@ -34,12 +51,13 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         campoNome = new javax.swing.JTextField();
-        campoTipo = new javax.swing.JTextField();
         campoDataCaptura = new javax.swing.JTextField();
         campoForca = new javax.swing.JTextField();
         btListar = new javax.swing.JButton();
         btLimpar = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
+        campoTipo = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoDados = new javax.swing.JTextArea();
@@ -48,13 +66,13 @@ public class Cadastro extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Pokemon"));
 
-        jLabel1.setText("Nome do Pokemon:");
+        jLabel1.setText("Nome do Pokemon * :");
 
-        jLabel2.setText("Tipo do Pokemon: ");
+        jLabel2.setText("Tipo do Pokemon * : ");
 
         jLabel3.setText("Data de Captura:");
 
-        jLabel4.setText("Força do Pokemon:");
+        jLabel4.setText("Força do Pokemon * :");
 
         campoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,11 +80,32 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
 
+        campoDataCaptura.setToolTipText("");
+
         btListar.setText("Listar");
+        btListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btListarActionPerformed(evt);
+            }
+        });
 
         btLimpar.setText("Limpar");
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
 
         btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
+
+        campoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planta", "Fogo", "Água", "Inseto", "Normal", "Venenoso", "Elétrico", "Terra", "Lutador", "Psíquico", "Pedra", "Voador", "Fantasma", "Gelo", "Dragão", "Metálico", "Noturno", "Fada" }));
+
+        jLabel5.setText("* Campos obrigatórios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -75,15 +114,18 @@ public class Cadastro extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(campoNome)
+                            .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(campoTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                            .addComponent(campoNome))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
@@ -97,7 +139,7 @@ public class Cadastro extends javax.swing.JFrame {
                         .addComponent(btLimpar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btSalvar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,15 +154,18 @@ public class Cadastro extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
-                    .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoForca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoForca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btListar)
                     .addComponent(btLimpar)
-                    .addComponent(btSalvar))
+                    .addComponent(btSalvar)
+                    .addComponent(jLabel5))
                 .addContainerGap())
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pokemons Cadastrados"));
 
         campoDados.setColumns(20);
         campoDados.setRows(5);
@@ -133,7 +178,7 @@ public class Cadastro extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +197,7 @@ public class Cadastro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +206,7 @@ public class Cadastro extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,6 +216,56 @@ public class Cadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNomeActionPerformed
 
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        Pokemon pokemon = new Pokemon();
+        pokemon.setNome(campoNome.getText());
+        pokemon.setTipo((String) campoTipo.getSelectedItem());
+        pokemon.setForca(campoForca.getText());
+        pokemon.setDataCaptura(campoDataCaptura.getText());
+        
+        if (pokemon.getNome().equals("") || pokemon.getForca().equals("") || pokemon.getTipo().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos marcados como obrigatórios para salvar");
+        } else {
+            manager.getTransaction().begin();
+            manager.persist(pokemon);
+            manager.getTransaction().commit();
+
+            JOptionPane.showMessageDialog(null, "Pokemon adicionado com sucesso!");
+
+            limparFormulario();
+
+            listarPokemons();            
+        }
+                
+    }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        limparFormulario();
+    }//GEN-LAST:event_btLimparActionPerformed
+
+    private void btListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListarActionPerformed
+        listarPokemons();
+    }//GEN-LAST:event_btListarActionPerformed
+
+    public void limparFormulario() {
+        campoNome.setText(null);
+        campoTipo.setSelectedIndex(0);
+        campoForca.setText(null);
+        campoDataCaptura.setText(null);
+    }
+    
+    public void listarPokemons() {
+        TypedQuery<Pokemon> query = (TypedQuery<Pokemon>) manager.createQuery("select p from Pokemon p");
+        List<Pokemon> pokemons = query.getResultList();
+        String texto = "";
+        for (int i = 0; i < pokemons.size(); i++) {
+            Pokemon p = new Pokemon();
+            p = pokemons.get(i);
+            texto += p.toString();
+        }
+        campoDados.setText(texto);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -214,11 +309,12 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JTextField campoDataCaptura;
     private javax.swing.JTextField campoForca;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoTipo;
+    private javax.swing.JComboBox<String> campoTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
